@@ -66,7 +66,6 @@
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
   }
 
-  /* ---------- NAV ---------- */
   .nav{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;align-items:center;justify-content:space-between;
@@ -104,8 +103,6 @@
     .nav-links{display:none;}
     .nav-order{padding:8px 16px;font-size:12px;}
   }
-
-  /* ---------- HERO ---------- */
   .hero{
     min-height:100svh;
     display:flex;
@@ -210,7 +207,6 @@
   .scroll-cue .line{width:1px;height:30px;background:currentColor;animation:pulse-line 1.8s ease-in-out infinite;}
   @keyframes pulse-line{0%,100%{opacity:0.2;}50%{opacity:0.8;}}
 
-  /* ---------- MARQUEE ---------- */
   .marquee{
     background:var(--coral);
     color:var(--ink);
@@ -234,7 +230,6 @@
     100%{transform:translateX(-50%);}
   }
 
-  /* ---------- STATEMENT ---------- */
   .statement{
     padding:min(20vh,180px) 6vw;
     text-align:center;
@@ -247,7 +242,6 @@
   }
   .statement h2 .hi{color:var(--coral);}
 
-  /* ---------- PUNCH (yellow) ---------- */
   .punch{
     background:var(--cream);
     color:var(--ink);
@@ -307,7 +301,6 @@
     100%{transform:translateY(0) rotate3d(1,1,0,360deg);}
   }
 
-  /* ---------- FLAVORS INTRO ---------- */
   .flavors-intro{
     padding:120px 6vw 60px;
     text-align:center;
@@ -321,8 +314,6 @@
     opacity:0.65;
     font-size:15px;
   }
-
-  /* ---------- FLAVOR SECTION ---------- */
   .flavor{
     min-height:100svh;
     display:flex;
@@ -455,8 +446,6 @@
   .flavor-banana{background:radial-gradient(120% 90% at 50% 20%, var(--banana-deep), var(--ink) 65%);}
   .flavor-banana .script-name{color:var(--banana);}
   .flavor-banana .flavor-price-tag{background:var(--banana);color:var(--ink);}
-
-  /* ---------- MANIFESTO ---------- */
   .manifesto{
     padding:min(24vh,220px) 6vw;
     text-align:center;
@@ -478,7 +467,6 @@
     display:inline-block;
   }
 
-  /* ---------- FOOTER ---------- */
   footer{
     background:var(--ink-soft);
     padding:70px 6vw 40px;
@@ -558,7 +546,6 @@
     <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
   </section>
 
-  <!-- MARQUEE -->
   <div class="marquee">
     <div class="marquee-track">
       <span>MANGO</span>✦<span>BLUEBERRY</span>✦<span>STRAWBERRY</span>✦<span>WATERMELON</span>✦<span>PINEAPPLE</span>✦<span>PASSION FRUIT</span>✦<span>BANANA</span>✦
@@ -566,12 +553,10 @@
     </div>
   </div>
 
-  <!-- STATEMENT -->
   <section class="statement" id="story">
     <h2>We don't blend fruit.<br>We set it <span class="hi">loose</span> —<br>cold, loud, alive.</h2>
   </section>
 
-  <!-- PUNCH -->
   <section class="punch" id="play">
     <div class="punch-decor">
       <span style="top:12%; left:8%;">🍓</span>
@@ -591,13 +576,11 @@
     <a class="btn-solid" href="#flavors">Order Now</a>
   </section>
 
-  <!-- FLAVORS INTRO -->
   <section class="flavors-intro" id="flavors">
     <h2>Choose your fighter</h2>
     <p>7 flavors. Zero boring ones.</p>
   </section>
 
-  <!-- FLAVOR: MANGO -->
   <section class="flavor flavor-mango">
     <div class="flavor-bg-word">MANGO</div>
     <div class="flavor-grid">
@@ -614,7 +597,6 @@
     </div>
   </section>
 
-  <!-- FLAVOR: BLUEBERRY -->
   <section class="flavor flavor-blueberry">
     <div class="flavor-bg-word">BLUEBERRY</div>
     <div class="flavor-grid">
@@ -631,7 +613,6 @@
     </div>
   </section>
 
-  <!-- FLAVOR: STRAWBERRY -->
   <section class="flavor flavor-strawberry">
     <div class="flavor-bg-word">STRAWBERRY</div>
     <div class="flavor-grid">
@@ -648,7 +629,6 @@
     </div>
   </section>
 
-  <!-- FLAVOR: WATERMELON -->
   <section class="flavor flavor-watermelon">
     <div class="flavor-bg-word">MELON</div>
     <div class="flavor-grid">
@@ -665,7 +645,6 @@
     </div>
   </section>
 
-  <!-- FLAVOR: PINEAPPLE -->
   <section class="flavor flavor-pineapple">
     <div class="flavor-bg-word">PINEAPPLE</div>
     <div class="flavor-grid">
@@ -681,8 +660,6 @@
       </div>
     </div>
   </section>
-
-  <!-- FLAVOR: PASSION FRUIT -->
   <section class="flavor flavor-passion">
     <div class="flavor-bg-word">PASSION</div>
     <div class="flavor-grid">
@@ -699,7 +676,6 @@
     </div>
   </section>
 
-  <!-- FLAVOR: BANANA -->
   <section class="flavor flavor-banana">
     <div class="flavor-bg-word">BANANA</div>
     <div class="flavor-grid">
@@ -716,13 +692,10 @@
     </div>
   </section>
 
-  <!-- MANIFESTO -->
   <section class="manifesto">
     <h2>Fruit is not a habit.<span class="script">it's a lifestyle.</span></h2>
     <a class="btn-solid" href="#flavors">Explore the flavors</a>
   </section>
-
-  <!-- FOOTER -->
   <footer>
     <div class="footer-top">
       <div class="footer-logo">ZUMO</div>
@@ -757,7 +730,6 @@
   </footer>
 
 <script>
-  // ---- Hero cups: mouse-driven 3D parallax tilt ----
   (function(){
     var hero = document.querySelector('.hero');
     var cups = document.querySelectorAll('.hero-cups .cup');
@@ -788,8 +760,6 @@
     }
     raf();
   })();
-
-  // ---- Flavor photos: hover tilt (desktop) ----
   (function(){
     if(window.matchMedia('(hover: none)').matches) return;
     document.querySelectorAll('.flavor-photo').forEach(function(photo){
@@ -807,7 +777,6 @@
     });
   })();
 
-  // ---- Scroll reveal for flavor sections (3D flip-in) ----
   (function(){
     var flavors = document.querySelectorAll('.flavor');
     if(!('IntersectionObserver' in window)){
