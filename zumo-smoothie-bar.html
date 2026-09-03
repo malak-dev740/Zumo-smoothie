@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZUMO — Fruit, Set Loose</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#150E1B;
+    --ink-soft:#241832;
+    --paper:#F2E9D8;
+    --cream:#FBE7A0;
+    --coral:#FF5A3C;
+    --mango:#F2A93B;
+    --mango-deep:#7A4A12;
+    --blueberry:#8B7CF6;
+    --blueberry-deep:#241854;
+    --strawberry:#FF6FA0;
+    --strawberry-deep:#4A0E28;
+    --watermelon:#FF5C5C;
+    --watermelon-deep:#0E3B23;
+    --pineapple:#FFD23F;
+    --pineapple-deep:#5A3E00;
+    --passion:#FF9142;
+    --passion-deep:#2E1146;
+    --banana:#FFE79A;
+    --banana-deep:#4A3B0A;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    line-height:0.92;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+  }
+
+  .script{
+    font-family:'Caveat', cursive;
+    text-transform:none;
+    letter-spacing:0;
+  }
+
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  section{position:relative;}
+
+  ::selection{background:var(--coral);color:var(--ink);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 5vw;
+    mix-blend-mode:normal;
+  }
+  .nav-logo{
+    font-family:'Anton', sans-serif;
+    font-size:26px;
+    letter-spacing:1px;
+    color:var(--paper);
+  }
+  .nav-links{
+    display:flex;gap:34px;
+    font-size:14px;
+    font-weight:500;
+  }
+  .nav-links a{
+    opacity:0.8;
+    transition:opacity 0.2s ease;
+    padding:6px 0;
+    border-bottom:1px solid transparent;
+  }
+  .nav-links a:hover{opacity:1;border-color:currentColor;}
+  .nav-order{
+    background:var(--coral);
+    color:var(--ink);
+    padding:10px 22px;
+    border-radius:100px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .nav-burger{display:none;}
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .nav-order{padding:8px 16px;font-size:12px;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:120px 6vw 80px;
+    background:
+      radial-gradient(50% 40% at 14% 12%, rgba(255,143,64,0.35), transparent 70%),
+      radial-gradient(55% 48% at 88% 8%, rgba(255,111,160,0.30), transparent 70%),
+      radial-gradient(65% 55% at 22% 92%, rgba(139,124,246,0.35), transparent 70%),
+      radial-gradient(60% 50% at 90% 85%, rgba(255,90,60,0.30), transparent 70%),
+      linear-gradient(160deg, #1D1128 0%, #150E1B 45%, #1A0F1E 100%);
+  }
+  .hero-eyebrow{
+    font-family:'Caveat', cursive;
+    font-size:26px;
+    color:var(--cream);
+    margin-bottom:6px;
+  }
+  .hero h1{
+    font-size:clamp(48px, 11vw, 128px);
+    max-width:1100px;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(100deg, #FF9142 0%, var(--coral) 45%, #FF6FA0 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    margin-top:26px;
+    font-size:clamp(16px,2.2vw,20px);
+    color:var(--paper);
+    opacity:0.75;
+    max-width:480px;
+  }
+  .hero-ctas{
+    margin-top:40px;
+    display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  }
+  .btn-solid{
+    background:var(--coral);
+    color:var(--ink);
+    padding:16px 34px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:15px;
+  }
+  .btn-outline{
+    border:1.5px solid rgba(242,233,216,0.4);
+    padding:16px 34px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:15px;
+  }
+
+  .hero-cups{
+    position:absolute;inset:0;
+    pointer-events:none;
+    perspective:1400px;
+  }
+  .cup{
+    position:absolute;
+    animation:float 6s ease-in-out infinite;
+    transform-style:preserve-3d;
+    animation-name:float;
+  }
+  .cup .tilt{
+    display:block;
+    transform-style:preserve-3d;
+    transition:transform 0.2s ease-out;
+    will-change:transform;
+  }
+  .cup img{
+    position:relative;
+    width:100%;
+    display:block;
+    border-radius:18px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.55), 0 8px 20px rgba(0,0,0,0.4);
+    backface-visibility:hidden;
+  }
+  .cup-1{width:150px; top:16%; left:8%; --r:-9deg; animation-delay:0s;}
+  .cup-2{width:190px; top:58%; left:4%; --r:6deg; animation-delay:1.2s;}
+  .cup-3{width:150px; top:14%; right:7%; --r:9deg; animation-delay:0.6s;}
+  .cup-4{width:180px; top:56%; right:5%; --r:-7deg; animation-delay:1.8s;}
+  @keyframes float{
+    0%{transform:translateY(0) rotate(var(--r,0deg)) rotateY(0deg);}
+    50%{transform:translateY(-24px) rotate(var(--r,0deg)) rotateY(14deg);}
+    100%{transform:translateY(0) rotate(var(--r,0deg)) rotateY(0deg);}
+  }
+  @media (max-width:900px){
+    .hero-cups img, .hero-cups .cup{display:none;}
+  }
+
+  .scroll-cue{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    font-size:12px;letter-spacing:2px;opacity:0.5;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scroll-cue .line{width:1px;height:30px;background:currentColor;animation:pulse-line 1.8s ease-in-out infinite;}
+  @keyframes pulse-line{0%,100%{opacity:0.2;}50%{opacity:0.8;}}
+
+  /* ---------- MARQUEE ---------- */
+  .marquee{
+    background:var(--coral);
+    color:var(--ink);
+    padding:16px 0;
+    overflow:hidden;
+    white-space:nowrap;
+    border-top:2px solid var(--ink);
+    border-bottom:2px solid var(--ink);
+    transform:rotate(-1.2deg);
+    margin:-2px 0;
+  }
+  .marquee-track{
+    display:inline-block;
+    animation:scroll-left 26s linear infinite;
+    font-family:'Anton', sans-serif;
+    font-size:clamp(20px,3vw,32px);
+  }
+  .marquee-track span{margin:0 22px;}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* ---------- STATEMENT ---------- */
+  .statement{
+    padding:min(20vh,180px) 6vw;
+    text-align:center;
+    background:var(--ink);
+  }
+  .statement h2{
+    font-size:clamp(30px,6vw,64px);
+    max-width:900px;
+    margin:0 auto;
+  }
+  .statement h2 .hi{color:var(--coral);}
+
+  /* ---------- PUNCH (yellow) ---------- */
+  .punch{
+    background:var(--cream);
+    color:var(--ink);
+    padding:140px 6vw 160px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .punch-badge{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--cream);
+    padding:8px 20px;
+    border-radius:100px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:28px;
+  }
+  .punch h2{
+    font-size:clamp(42px,10vw,110px);
+  }
+  .punch h2 .warm{color:var(--coral);}
+  .punch-note{
+    font-family:'Caveat', cursive;
+    font-size:clamp(22px,3vw,30px);
+    margin-top:10px;
+  }
+  .punch-pills{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+    margin-top:34px;
+  }
+  .punch-pills span{
+    border:1.5px solid var(--ink);
+    padding:9px 20px;
+    border-radius:100px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .punch .btn-solid{
+    margin-top:38px;
+    display:inline-block;
+  }
+  .punch-decor{
+    position:absolute;inset:0;pointer-events:none;
+    font-size:40px;
+    opacity:0.9;
+    perspective:900px;
+  }
+  .punch-decor span{
+    position:absolute;
+    display:inline-block;
+    transform-style:preserve-3d;
+    animation:tumble 5s ease-in-out infinite;
+  }
+  @keyframes tumble{
+    0%{transform:translateY(0) rotate3d(1,1,0,0deg);}
+    50%{transform:translateY(-26px) rotate3d(1,1,0,180deg);}
+    100%{transform:translateY(0) rotate3d(1,1,0,360deg);}
+  }
+
+  /* ---------- FLAVORS INTRO ---------- */
+  .flavors-intro{
+    padding:120px 6vw 60px;
+    text-align:center;
+    background:var(--ink);
+  }
+  .flavors-intro h2{
+    font-size:clamp(34px,7vw,72px);
+  }
+  .flavors-intro p{
+    margin-top:16px;
+    opacity:0.65;
+    font-size:15px;
+  }
+
+  /* ---------- FLAVOR SECTION ---------- */
+  .flavor{
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:80px 6vw;
+    position:relative;
+    overflow:hidden;
+  }
+  .flavor-bg-word{
+    position:absolute;
+    font-family:'Anton', sans-serif;
+    font-size:min(24vw,260px);
+    line-height:1;
+    color:rgba(255,255,255,0.06);
+    white-space:nowrap;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    z-index:0;
+    pointer-events:none;
+  }
+  .flavor-grid{
+    position:relative;z-index:1;
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:60px;
+    max-width:1100px;
+    width:100%;
+    align-items:center;
+    perspective:1600px;
+  }
+  .flavor-photo{
+    position:relative;
+    transform-style:preserve-3d;
+    opacity:0;
+    transform:translateY(40px) rotateY(-22deg) rotateX(4deg);
+    transition:opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  .flavor.in-view .flavor-photo{
+    opacity:1;
+    transform:translateY(0) rotateY(0deg) rotateX(0deg);
+  }
+  .flavor-photo .tilt-inner{
+    transform-style:preserve-3d;
+    transition:transform 0.25s ease-out;
+  }
+  .flavor-photo img{
+    width:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    border-radius:26px;
+    box-shadow:0 40px 80px rgba(0,0,0,0.45);
+    backface-visibility:hidden;
+  }
+  .flavor-text{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.9s cubic-bezier(.2,.7,.2,1) 0.15s, transform 0.9s cubic-bezier(.2,.7,.2,1) 0.15s;
+  }
+  .flavor.in-view .flavor-text{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .flavor-price-tag{
+    position:absolute;
+    bottom:-18px;left:-18px;
+    background:var(--ink);
+    color:var(--paper);
+    padding:14px 22px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.4);
+  }
+  .flavor-text .num{
+    font-size:14px;
+    opacity:0.55;
+    font-weight:600;
+  }
+  .flavor-text h3.script-name{
+    font-family:'Caveat', cursive;
+    font-size:clamp(48px,7vw,88px);
+    text-transform:none;
+    margin:6px 0 14px;
+    line-height:1;
+  }
+  .flavor-text .desc{
+    font-size:clamp(16px,2vw,19px);
+    max-width:420px;
+    opacity:0.85;
+    line-height:1.5;
+  }
+  .flavor-cta{
+    margin-top:30px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  @media (max-width:820px){
+    .flavor-grid{grid-template-columns:1fr;gap:36px;text-align:center;}
+    .flavor-photo{max-width:320px;margin:0 auto;}
+    .flavor-text{display:flex;flex-direction:column;align-items:center;}
+    .flavor-price-tag{left:50%;transform:translateX(-50%);bottom:-16px;}
+  }
+
+  .flavor-mango{background:radial-gradient(120% 90% at 50% 20%, var(--mango-deep), var(--ink) 65%);}
+  .flavor-mango .script-name{color:var(--mango);}
+  .flavor-mango .flavor-price-tag{background:var(--mango);color:var(--ink);}
+
+  .flavor-blueberry{background:radial-gradient(120% 90% at 50% 20%, var(--blueberry-deep), var(--ink) 65%);}
+  .flavor-blueberry .script-name{color:var(--blueberry);}
+  .flavor-blueberry .flavor-price-tag{background:var(--blueberry);color:var(--ink);}
+
+  .flavor-strawberry{background:radial-gradient(120% 90% at 50% 20%, var(--strawberry-deep), var(--ink) 65%);}
+  .flavor-strawberry .script-name{color:var(--strawberry);}
+  .flavor-strawberry .flavor-price-tag{background:var(--strawberry);color:var(--ink);}
+
+  .flavor-watermelon{background:radial-gradient(120% 90% at 50% 20%, var(--watermelon-deep), var(--ink) 65%);}
+  .flavor-watermelon .script-name{color:var(--watermelon);}
+  .flavor-watermelon .flavor-price-tag{background:var(--watermelon);color:var(--ink);}
+
+  .flavor-pineapple{background:radial-gradient(120% 90% at 50% 20%, var(--pineapple-deep), var(--ink) 65%);}
+  .flavor-pineapple .script-name{color:var(--pineapple);}
+  .flavor-pineapple .flavor-price-tag{background:var(--pineapple);color:var(--ink);}
+
+  .flavor-passion{background:radial-gradient(120% 90% at 50% 20%, var(--passion-deep), var(--ink) 65%);}
+  .flavor-passion .script-name{color:var(--passion);}
+  .flavor-passion .flavor-price-tag{background:var(--passion);color:var(--ink);}
+
+  .flavor-banana{background:radial-gradient(120% 90% at 50% 20%, var(--banana-deep), var(--ink) 65%);}
+  .flavor-banana .script-name{color:var(--banana);}
+  .flavor-banana .flavor-price-tag{background:var(--banana);color:var(--ink);}
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto{
+    padding:min(24vh,220px) 6vw;
+    text-align:center;
+    background:var(--ink);
+  }
+  .manifesto h2{
+    font-size:clamp(34px,8vw,90px);
+    max-width:920px;
+    margin:0 auto;
+  }
+  .manifesto h2 .script{
+    display:block;
+    color:var(--coral);
+    font-size:clamp(30px,7vw,72px);
+    margin-top:6px;
+  }
+  .manifesto .btn-solid{
+    margin-top:44px;
+    display:inline-block;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--ink-soft);
+    padding:70px 6vw 40px;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:40px;
+    padding-bottom:50px;
+    border-bottom:1px solid rgba(242,233,216,0.15);
+  }
+  .footer-logo{
+    font-family:'Anton', sans-serif;
+    font-size:32px;
+  }
+  .footer-cols{
+    display:flex;gap:60px;flex-wrap:wrap;
+  }
+  .footer-col h4{
+    font-size:13px;
+    opacity:0.55;
+    margin-bottom:14px;
+    font-weight:600;
+  }
+  .footer-col a, .footer-col p{
+    display:block;
+    font-size:14px;
+    opacity:0.85;
+    margin-bottom:9px;
+  }
+  .footer-bottom{
+    padding-top:26px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:12px;
+    opacity:0.5;
+  }
+  .credits{
+    padding-top:26px;
+    font-size:12px;
+    opacity:0.5;
+    line-height:1.8;
+  }
+  .credits a{opacity:1;border-bottom:1px dotted currentColor;}
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo">ZUMO</div>
+    <div class="nav-links">
+      <a href="#story">Manifesto</a>
+      <a href="#play">Play</a>
+      <a href="#flavors">Flavors</a>
+    </div>
+    <a class="nav-order" href="#flavors">Order Here</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-cups" id="heroCups">
+      <div class="cup cup-1" data-depth="1.1"><div class="tilt"><img src="https://images.pexels.com/photos/6063291/pexels-photo-6063291.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Mango smoothie"></div></div>
+      <div class="cup cup-2" data-depth="0.6"><div class="tilt"><img src="https://images.pexels.com/photos/11135665/pexels-photo-11135665.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Blueberry smoothie"></div></div>
+      <div class="cup cup-3" data-depth="0.8"><div class="tilt"><img src="https://images.pexels.com/photos/3342301/pexels-photo-3342301.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Strawberry smoothie"></div></div>
+      <div class="cup cup-4" data-depth="1.3"><div class="tilt"><img src="https://images.pexels.com/photos/32512490/pexels-photo-32512490.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Pineapple smoothie"></div></div>
+    </div>
+    <p class="hero-eyebrow">good morning, sunshine</p>
+    <h1>Fruit tastes <span class="accent">better</span><br>blended loud</h1>
+    <p class="hero-sub">Cut. Crushed. No syrups, no shortcuts — just whole fruit, ice, and a blender with a grudge.</p>
+    <div class="hero-ctas">
+      <a class="btn-solid" href="#flavors">See the flavors</a>
+      <a class="btn-outline" href="#story">Our story</a>
+    </div>
+    <div class="scroll-cue"><span>SCROLL</span><span class="line"></span></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>MANGO</span>✦<span>BLUEBERRY</span>✦<span>STRAWBERRY</span>✦<span>WATERMELON</span>✦<span>PINEAPPLE</span>✦<span>PASSION FRUIT</span>✦<span>BANANA</span>✦
+      <span>MANGO</span>✦<span>BLUEBERRY</span>✦<span>STRAWBERRY</span>✦<span>WATERMELON</span>✦<span>PINEAPPLE</span>✦<span>PASSION FRUIT</span>✦<span>BANANA</span>✦
+    </div>
+  </div>
+
+  <!-- STATEMENT -->
+  <section class="statement" id="story">
+    <h2>We don't blend fruit.<br>We set it <span class="hi">loose</span> —<br>cold, loud, alive.</h2>
+  </section>
+
+  <!-- PUNCH -->
+  <section class="punch" id="play">
+    <div class="punch-decor">
+      <span style="top:12%; left:8%;">🍓</span>
+      <span style="top:65%; left:6%; animation-delay:1s;">🍌</span>
+      <span style="top:18%; right:9%; animation-delay:0.5s;">🥭</span>
+      <span style="top:62%; right:8%; animation-delay:1.6s;">🫐</span>
+      <span style="top:38%; left:47%; animation-delay:2s;">🍉</span>
+    </div>
+    <div class="punch-badge">Open Late</div>
+    <h2>Play with<br><span class="warm">your food.</span></h2>
+    <p class="punch-note">no rules, just fruit</p>
+    <div class="punch-pills">
+      <span>100% Fruit</span>
+      <span>Cold As Love</span>
+      <span>Zero Syrup</span>
+    </div>
+    <a class="btn-solid" href="#flavors">Order Now</a>
+  </section>
+
+  <!-- FLAVORS INTRO -->
+  <section class="flavors-intro" id="flavors">
+    <h2>Choose your fighter</h2>
+    <p>7 flavors. Zero boring ones.</p>
+  </section>
+
+  <!-- FLAVOR: MANGO -->
+  <section class="flavor flavor-mango">
+    <div class="flavor-bg-word">MANGO</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/6063291/pexels-photo-6063291.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mango smoothie"></div>
+        <div class="flavor-price-tag">$4.25</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">01 / 07</p>
+        <h3 class="script-name">mango</h3>
+        <p class="desc">The gold rush. Ripe Alphonso mango, orange blossom and a splash of cream — sunshine you can hold.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: BLUEBERRY -->
+  <section class="flavor flavor-blueberry">
+    <div class="flavor-bg-word">BLUEBERRY</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/11135665/pexels-photo-11135665.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Blueberry smoothie"></div>
+        <div class="flavor-price-tag">$4.50</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">02 / 07</p>
+        <h3 class="script-name">blueberry</h3>
+        <p class="desc">The deep one. Wild blueberries, midnight skies, oat cream — moody in the best way.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: STRAWBERRY -->
+  <section class="flavor flavor-strawberry">
+    <div class="flavor-bg-word">STRAWBERRY</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/3342301/pexels-photo-3342301.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Strawberry smoothie"></div>
+        <div class="flavor-price-tag">$3.95</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">03 / 07</p>
+        <h3 class="script-name">strawberry</h3>
+        <p class="desc">The heartbreaker. Sun-drunk strawberries, vanilla bean, whipped cream — sweet on purpose.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: WATERMELON -->
+  <section class="flavor flavor-watermelon">
+    <div class="flavor-bg-word">MELON</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/19523851/pexels-photo-19523851.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Watermelon smoothie"></div>
+        <div class="flavor-price-tag">$3.75</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">04 / 07</p>
+        <h3 class="script-name">watermelon</h3>
+        <p class="desc">The cooldown. Crushed watermelon, a mint snap, a squeeze of lime — built for hot days.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: PINEAPPLE -->
+  <section class="flavor flavor-pineapple">
+    <div class="flavor-bg-word">PINEAPPLE</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/32512490/pexels-photo-32512490.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Pineapple smoothie"></div>
+        <div class="flavor-price-tag">$4.10</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">05 / 07</p>
+        <h3 class="script-name">pineapple</h3>
+        <p class="desc">The troublemaker. Charred pineapple, coconut cream, a pinch of chili salt — sweet with an edge.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: PASSION FRUIT -->
+  <section class="flavor flavor-passion">
+    <div class="flavor-bg-word">PASSION</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/27246473/pexels-photo-27246473.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Passion fruit smoothie"></div>
+        <div class="flavor-price-tag">$4.60</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">06 / 07</p>
+        <h3 class="script-name">passion fruit</h3>
+        <p class="desc">The wild card. Tart passion fruit, mango juice, a twist of citrus zest — never the same twice.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAVOR: BANANA -->
+  <section class="flavor flavor-banana">
+    <div class="flavor-bg-word">BANANA</div>
+    <div class="flavor-grid">
+      <div class="flavor-photo">
+        <div class="tilt-inner"><img src="https://images.pexels.com/photos/5946804/pexels-photo-5946804.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Banana smoothie"></div>
+        <div class="flavor-price-tag">$3.60</div>
+      </div>
+      <div class="flavor-text">
+        <p class="num">07 / 07</p>
+        <h3 class="script-name">banana</h3>
+        <p class="desc">The classic. Frozen banana, a honey drizzle, a dust of cinnamon — the one everyone secretly wants.</p>
+        <a class="btn-outline flavor-cta">Take this one</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <h2>Fruit is not a habit.<span class="script">it's a lifestyle.</span></h2>
+    <a class="btn-solid" href="#flavors">Explore the flavors</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">ZUMO</div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Menu</h4>
+          <a href="#story">Manifesto</a>
+          <a href="#play">Play</a>
+          <a href="#flavors">Flavors</a>
+        </div>
+        <div class="footer-col">
+          <h4>Visit</h4>
+          <p>Open late, every day</p>
+          <p>hello@zumo.bar</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ZUMO. Cold, loud, alive.</span>
+      <span>Made with a blender and no chill.</span>
+    </div>
+    <div class="credits">
+      Photo credits (Pexels, free to use): 
+      <a href="https://www.pexels.com/photo/mango-shake-on-a-tall-glass-6063291/" target="_blank">Mango — FOX</a> ·
+      <a href="https://www.pexels.com/photo/close-up-view-of-glass-with-blueberry-smoothie-11135665/" target="_blank">Blueberry — Ralitsa Racheva</a> ·
+      <a href="https://www.pexels.com/photo/strawberry-smoothie-on-a-wine-glass-3342301/" target="_blank">Strawberry — İbrahim Hakkı Uçman</a> ·
+      <a href="https://www.pexels.com/photo/glass-of-juice-by-watermelon-slices-19523851/" target="_blank">Watermelon — Marcelo Verfe</a> ·
+      <a href="https://www.pexels.com/photo/refreshing-pineapple-smoothie-with-straws-32512490/" target="_blank">Pineapple — Nguyễn Tiến Thành</a> ·
+      <a href="https://www.pexels.com/photo/a-drink-with-a-straw-and-a-wooden-stick-27246473/" target="_blank">Passion fruit — thejourneyofframes</a> ·
+      <a href="https://www.pexels.com/photo/delicious-banana-smoothie-in-carafe-with-straw-5946804/" target="_blank">Banana — Charlotte May</a>
+    </div>
+  </footer>
+
+<script>
+  // ---- Hero cups: mouse-driven 3D parallax tilt ----
+  (function(){
+    var hero = document.querySelector('.hero');
+    var cups = document.querySelectorAll('.hero-cups .cup');
+    if(!hero || !cups.length) return;
+    var targetX = 0, targetY = 0, curX = 0, curY = 0;
+
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      targetX = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      targetY = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    });
+    hero.addEventListener('mouseleave', function(){ targetX = 0; targetY = 0; });
+
+    function raf(){
+      curX += (targetX - curX) * 0.06;
+      curY += (targetY - curY) * 0.06;
+      cups.forEach(function(cup){
+        var depth = parseFloat(cup.dataset.depth || 1);
+        var tilt = cup.querySelector('.tilt');
+        if(!tilt) return;
+        var rx = (curY * -10 * depth).toFixed(2);
+        var ry = (curX * 14 * depth).toFixed(2);
+        var tx = (curX * 18 * depth).toFixed(2);
+        var ty = (curY * 14 * depth).toFixed(2);
+        tilt.style.transform = 'perspective(900px) translateX('+tx+'px) translateY('+ty+'px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
+      });
+      requestAnimationFrame(raf);
+    }
+    raf();
+  })();
+
+  // ---- Flavor photos: hover tilt (desktop) ----
+  (function(){
+    if(window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.flavor-photo').forEach(function(photo){
+      var inner = photo.querySelector('.tilt-inner');
+      if(!inner) return;
+      photo.addEventListener('mousemove', function(e){
+        var r = photo.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        inner.style.transform = 'rotateY('+(px*18).toFixed(2)+'deg) rotateX('+(-py*18).toFixed(2)+'deg) translateZ(10px)';
+      });
+      photo.addEventListener('mouseleave', function(){
+        inner.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0px)';
+      });
+    });
+  })();
+
+  // ---- Scroll reveal for flavor sections (3D flip-in) ----
+  (function(){
+    var flavors = document.querySelectorAll('.flavor');
+    if(!('IntersectionObserver' in window)){
+      flavors.forEach(function(f){ f.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.28 });
+    flavors.forEach(function(f){ io.observe(f); });
+  })();
+</script>
+</body>
+</html>
